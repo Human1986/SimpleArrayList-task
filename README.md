@@ -47,7 +47,7 @@ interface, and provide implementations of the following methods:
 ### Restrictions
 You may not: 
 * Use any type from the `java.util` package (or its subpackages) except for: 
-  * `java.util.Iterator`
+  * `java.util.Object`
   * `java.util.Optional`
 * Add any additional fields into the `SingleArrayListImpl` class.
 * Add any additional public methods to the `SingleArrayListImpl` class.
