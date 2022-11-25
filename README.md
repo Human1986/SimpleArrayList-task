@@ -3,7 +3,7 @@
 The purpose of this exercise is to describe, create, and use lists that are built according to special rules.
 
 
-Duration: _45 minutes_
+Duration: **45 minutes**
 
 
 
@@ -11,7 +11,7 @@ Duration: _45 minutes_
 
 In this task, you will describe a list that is based on a dynamic array. The internal structure of the list is a one-dimensional array of the Object type with an initial capacity/size of 10 and a size field that stores the number of elements in the list. You must provide for the expansion of the array (list) capacity when the number of elements reaches 75% (load factor 0.75) of its size. Use the following expression to calculate the increase in capacity: Double the current capacity of the array and then multiply it by the load factor.
 
-Now, please proceed to the [`SimpleArrayListImpl`](src/main/java/com/epam/rd/autocode/collection/array/SimpleArrayListImpl.java) class, which implements the  [`SimpleArrayList`](src/main/java/com/epam/rd/autocode/collection/array/SimpleArrayList.java) interface, and provide implementations of the following methods:
+Now, please proceed to the `SimpleArrayListImpl` class, which implements the `SimpleArrayList` interface, and provide implementations of the following methods:
 
 *	`int size()`  
    Returns the number of elements  
@@ -45,7 +45,7 @@ Now, please proceed to the [`SimpleArrayListImpl`](src/main/java/com/epam/rd/aut
 *	You can add any private methods to the `SimpleArrayListImp` class.
 
 
-### Restrictions
+## Restrictions
 You may not: 
 * Use any type from the `java.util` package (or its subpackages) except for:  
       * `java.util.Iterator`  
