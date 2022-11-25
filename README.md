@@ -9,7 +9,7 @@ Duration: **45 minutes**
 
 ## Description
 
-In this task, you will describe a list that is based on a dynamic array. The internal structure of the list is a one-dimensional array of the Object type with an initial capacity/size of 10 and a size field that stores the number of elements in the list. You must provide for the expansion of the array (list) capacity when the number of elements reaches 75% (load factor 0.75) of its size. Use the following expression to calculate the increase in capacity: Double the current capacity of the array and then multiply it by the load factor.
+In this task, you will describe a list that is based on a dynamic array. The internal structure of the list is a one-dimensional array of the `Object` type with an initial capacity/size of 10 and a size field that stores the number of elements in the list. You must provide for the expansion of the array (list) capacity when the number of elements reaches 75% (load factor 0.75) of its size. Use the following expression to calculate the increase in capacity: Doub le the current capacity of the array and then multiply it by the load factor.
 
 Now, please proceed to the `SimpleArrayListImpl` class, which implements the `SimpleArrayList` interface, and provide implementations of the following methods:
 
@@ -37,7 +37,7 @@ Now, please proceed to the `SimpleArrayListImpl` class, which implements the `Si
 
 ### Details:
 *	The list is created by the default constructor, which creates an internal array with an initial length of 10 elements.
-*	The list cannot contain null elements. The add and remove methods must throw a `NullPointerException` if they get null.
+*	The list cannot contain `null` elements. The add and remove methods must throw a `NullPointerException` if they get null.
 *	The get method must throw `IndexOutOfBoundsException` if the index is outside the [0 … size - 1] range.
 *	The size field specifies the number of elements in the list and where to place the next element.
 *	The method for adding a new element must first check whether the capacity of the list should be increased before adding it.
