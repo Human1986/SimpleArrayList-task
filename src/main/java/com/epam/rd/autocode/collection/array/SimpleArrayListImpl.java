@@ -3,7 +3,6 @@ package com.epam.rd.autocode.collection.array;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.StringJoiner;
 
 public class SimpleArrayListImpl implements SimpleArrayList {
 
@@ -26,28 +25,55 @@ public class SimpleArrayListImpl implements SimpleArrayList {
     @Override
     public boolean add(Object element) {
         Objects.requireNonNull(element);
-        increaseDataArrayIfFull();
+        if (isEmpty()) {
+            elements[0] = element;
+        }
         elements[size] = element;
         size++;
+
+        if (size >= elements.length * INCREASE_LOAD_FACTOR) {
+            increaseCapacity();
+        }
         return true;
     }
 
-    private void increaseDataArrayIfFull() {
-        int newSize = (int) (elements.length * INCREASE_LOAD_FACTOR * FACTOR_MULTIPLIER);
-        if (elements.length == size ) {
-            elements = Arrays.copyOf(elements, newSize);
+    @Override
+    public Optional<Object> remove(Object el) {
+        Objects.requireNonNull(el);
+
+        for (int i = 0; i < size; i++) {
+            if (elements[i].equals(el)) {
+                Object removed = elements[i];
+                System.arraycopy(elements, i + 1, elements, i, size - i - 1);
+                elements[size - 1] = null;
+                size--;
+                return Optional.of(removed);
+            }
         }
+        if (size <= elements.length * DECREASE_LOAD_FACTOR) {
+            decreaseCapacity();
+        }
+        return Optional.empty();
+    }
+
+    private void increaseCapacity() {
+        int newCapacity = (int) (elements.length * INCREASE_LOAD_FACTOR * FACTOR_MULTIPLIER);
+        elements = Arrays.copyOf(elements, newCapacity);
+    }
+
+    @Override
+    public boolean decreaseCapacity() {
+        int newCapacity = size * FACTOR_MULTIPLIER;
+        if (newCapacity < elements.length) {
+            elements = Arrays.copyOf(elements, newCapacity);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public int capacity() {
         return elements.length;
-    }
-
-    @Override
-    public boolean decreaseCapacity() {
-        // place your code here
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -61,32 +87,22 @@ public class SimpleArrayListImpl implements SimpleArrayList {
     }
 
     @Override
-    public Optional<Object> remove(Object el) {
-        Objects.requireNonNull(el);
-        Object del = null;
-        for (int i = 0; i < elements.length; i++) {
-            if (el.equals(elements[i])) {
-                del = elements[i];
-                System.arraycopy(elements, i + 1, elements, i, size - 1);
-                size--;
-            }
-        }
-        return Optional.ofNullable(del);
-    }
-
-    @Override
     public int size() {
         return size;
     }
 
     @Override
     public String toString() {
-        StringJoiner elJoin = new StringJoiner(", ", "[", "]");
-        for (Object element : elements) {
-            if (element != null) {
-                elJoin.add(element.toString());
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < size; i++) {
+            sb.append(elements[i]);
+            if (i < size - 1) {
+                sb.append(", ");
             }
         }
-        return elJoin.toString();
+        sb.append("]");
+        return sb.toString();
     }
 }
+
