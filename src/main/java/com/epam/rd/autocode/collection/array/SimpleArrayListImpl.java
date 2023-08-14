@@ -1,7 +1,6 @@
 package com.epam.rd.autocode.collection.array;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 
 public class SimpleArrayListImpl implements SimpleArrayList {
@@ -24,7 +23,7 @@ public class SimpleArrayListImpl implements SimpleArrayList {
 
     @Override
     public boolean add(Object element) {
-        Objects.requireNonNull(element);
+        if (element == null) throw new NullPointerException();
         if (isEmpty()) {
             elements[0] = element;
         }
@@ -39,7 +38,7 @@ public class SimpleArrayListImpl implements SimpleArrayList {
 
     @Override
     public Optional<Object> remove(Object el) {
-        Objects.requireNonNull(el);
+        if (el == null) throw new NullPointerException();
 
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(el)) {
@@ -58,14 +57,18 @@ public class SimpleArrayListImpl implements SimpleArrayList {
 
     private void increaseCapacity() {
         int newCapacity = (int) (elements.length * INCREASE_LOAD_FACTOR * FACTOR_MULTIPLIER);
-        elements = Arrays.copyOf(elements, newCapacity);
+        Object[] newArray = new Object[newCapacity];
+        System.arraycopy(elements, 0, newArray, 0, size);
+        elements = newArray;
     }
 
     @Override
     public boolean decreaseCapacity() {
         int newCapacity = size * FACTOR_MULTIPLIER;
         if (newCapacity < elements.length) {
-            elements = Arrays.copyOf(elements, newCapacity);
+            Object[] newArray = new Object[newCapacity];
+            System.arraycopy(elements, 0, newArray, 0, size);
+            elements = newArray;
             return true;
         }
         return false;
@@ -78,7 +81,7 @@ public class SimpleArrayListImpl implements SimpleArrayList {
 
     @Override
     public Object get(int index) {
-        Objects.checkIndex(index, size);
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
         return elements[index];
     }
 
