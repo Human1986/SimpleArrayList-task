@@ -1,6 +1,9 @@
 package com.epam.rd.autocode.collection.array;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.StringJoiner;
 
 public class SimpleArrayListImpl implements SimpleArrayList {
 
@@ -16,19 +19,29 @@ public class SimpleArrayListImpl implements SimpleArrayList {
      * Creates a list with the default capacity = 10.
      */
     public SimpleArrayListImpl() {
-        // place your code here
+        this.elements = new Object[DEFAULT_CAPACITY];
+        this.size = 0;
     }
 
     @Override
     public boolean add(Object element) {
-        // place your code here
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(element);
+        increaseDataArrayIfFull();
+        elements[size] = element;
+        size++;
+        return true;
+    }
+
+    private void increaseDataArrayIfFull() {
+        int newSize = (int) (elements.length * INCREASE_LOAD_FACTOR * FACTOR_MULTIPLIER);
+        if (elements.length == size ) {
+            elements = Arrays.copyOf(elements, newSize);
+        }
     }
 
     @Override
     public int capacity() {
-        // place your code here
-        throw new UnsupportedOperationException();
+        return elements.length;
     }
 
     @Override
@@ -39,30 +52,41 @@ public class SimpleArrayListImpl implements SimpleArrayList {
 
     @Override
     public Object get(int index) {
-        // place your code here
-        throw new UnsupportedOperationException();
+        Objects.checkIndex(index, size);
+        return elements[index];
     }
 
     private boolean isEmpty() {
-        // place your code here
-        throw new UnsupportedOperationException();
+        return size == 0;
     }
 
     @Override
     public Optional<Object> remove(Object el) {
-        // place your code here
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(el);
+        Object del = null;
+        for (int i = 0; i < elements.length; i++) {
+            if (el.equals(elements[i])) {
+                del = elements[i];
+                System.arraycopy(elements, i + 1, elements, i, size - 1);
+                size--;
+            }
+        }
+        return Optional.ofNullable(del);
     }
 
     @Override
     public int size() {
-        // place your code here
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     @Override
     public String toString() {
-        // place your code here
-        throw new UnsupportedOperationException();
+        StringJoiner elJoin = new StringJoiner(", ", "[", "]");
+        for (Object element : elements) {
+            if (element != null) {
+                elJoin.add(element.toString());
+            }
+        }
+        return elJoin.toString();
     }
 }
